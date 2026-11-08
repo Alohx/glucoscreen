@@ -1,0 +1,49 @@
+# ---------------------------------------------------------------
+#  Never publish credentials or personal configuration
+# ---------------------------------------------------------------
+# ESPHome / Home Assistant secrets (Wi-Fi, API key, OTA password)
+secrets.yaml
+*secrets*.yaml
+*.secret
+*.key
+*.pem
+
+# Home Assistant configuration fragments (contain your entity IDs)
+configuration.yaml
+customize.yaml
+automations.yaml
+scripts.yaml
+*.local.yaml
+*.private.yaml
+
+# Personal copies of the device config (e.g. with your own device name)
+*-private.yaml
+*_private.yaml
+
+# ---------------------------------------------------------------
+#  ESPHome / PlatformIO build output
+# ---------------------------------------------------------------
+.esphome/
+.pioenvs/
+.piolibdeps/
+.pio/
+build/
+*.bin
+*.elf
+*.map
+
+# ---------------------------------------------------------------
+#  Logs, backups, editor and OS files
+# ---------------------------------------------------------------
+*.log
+*.bak
+*.backup
+*.backup.yaml
+*.orig
+*.swp
+*~
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
