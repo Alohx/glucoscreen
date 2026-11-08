@@ -8,6 +8,12 @@ It is **not tied to a specific sensor**: any CGM works whose glucose value, tren
 time are available in Home Assistant (e.g. via the Dexcom, Nightscout or LibreLink
 integrations). It has been tested with a **Dexcom G7** via the Dexcom integration.
 
+<p align="center">
+  <img src="images/home-light-de.png" width="240" alt="Home screen with glucose value and trend">
+  <img src="images/chart-light.png" width="240" alt="3 hour history chart">
+  <img src="images/home-high-dark.png" width="240" alt="High value in dark mode">
+</p>
+
 Features:
 
 - Glucose value in a circle with trend tip and arrow(s), colored yellow/red when high/low
@@ -19,6 +25,35 @@ Features:
 - 24 h history stored on the device (survives reboots); gaps are refilled from Home
   Assistant automatically
 - German and English UI, translation table for adding more languages
+
+## Screenshots
+
+Taken with the [simulator](#7-simulator-screenshots-and-testing-without-a-device) using demo
+values; the device shows the same picture.
+
+**Alert colors** – the inner circle and the chart turn yellow above “High” and red below
+“Low”; the pointer shows the trend direction (two arrows = rising/falling quickly):
+
+| In range | High (dark mode) | Low |
+|:---:|:---:|:---:|
+| <img src="images/home-light-de.png" width="230" alt="In range"> | <img src="images/home-high-dark.png" width="230" alt="High, dark mode"> | <img src="images/home-low-light.png" width="230" alt="Low"> |
+| <img src="images/chart-light.png" width="230" alt="Chart in range"> | <img src="images/chart-high-dark-12h.png" width="230" alt="Chart high, 12 h"> | <img src="images/chart-low-light.png" width="230" alt="Chart low"> |
+
+**Light and dark theme** – switchable on the device, in Home Assistant or automatically
+with the night period:
+
+| Light | Dark |
+|:---:|:---:|
+| <img src="images/chart-light.png" width="230" alt="Chart light"> | <img src="images/chart-dark.png" width="230" alt="Chart dark"> |
+| <img src="images/home-light-de.png" width="230" alt="Home light"> | <img src="images/home-dark-en.png" width="230" alt="Home dark"> |
+
+**Settings on the device** (German and English UI):
+
+| Alert limits | Display |
+|:---:|:---:|
+| <img src="images/limits-en.png" width="230" alt="Alert limits page"> | <img src="images/display-en.png" width="230" alt="Display settings page"> |
+
+## Files
 
 | File | Purpose |
 |---|---|

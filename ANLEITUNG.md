@@ -7,6 +7,33 @@ Glukosesensor (CGM), dessen Wert, Trend und Messzeitpunkt in Home Assistant verf
 (z. B. über die Integrationen Dexcom, Nightscout oder LibreLink). Getestet wurde es mit
 einem **Dexcom G7** über die Dexcom-Integration.
 
+## Bildschirmfotos
+
+Aufgenommen mit dem [Simulator](#7-simulator-screenshots-und-tests-ohne-gerät) und
+Demo-Werten; das Gerät zeigt dasselbe Bild.
+
+**Warnfarben** – Innenfläche und Diagramm werden gelb über „Hoch“ und rot unter „Niedrig“;
+die Spitze zeigt die Trendrichtung (zwei Pfeile = schnell steigend/fallend):
+
+| Im Zielbereich | Hoch (Dunkelmodus) | Niedrig |
+|:---:|:---:|:---:|
+| <img src="images/home-light-de.png" width="230" alt="Im Zielbereich"> | <img src="images/home-high-dark.png" width="230" alt="Hoch, Dunkelmodus"> | <img src="images/home-low-light.png" width="230" alt="Niedrig"> |
+| <img src="images/chart-light.png" width="230" alt="Diagramm im Zielbereich"> | <img src="images/chart-high-dark-12h.png" width="230" alt="Diagramm hoch, 12 h"> | <img src="images/chart-low-light.png" width="230" alt="Diagramm niedrig"> |
+
+**Hell und dunkel** – umschaltbar am Gerät, in Home Assistant oder automatisch zur Nachtzeit:
+
+| Hell | Dunkel |
+|:---:|:---:|
+| <img src="images/chart-light.png" width="230" alt="Diagramm hell"> | <img src="images/chart-dark.png" width="230" alt="Diagramm dunkel"> |
+
+**Einstellungen am Gerät:**
+
+| Grenzwerte | Anzeige |
+|:---:|:---:|
+| <img src="images/limits-de.png" width="230" alt="Seite Grenzwerte"> | <img src="images/display-de.png" width="230" alt="Seite Anzeige"> |
+
+## Hinweise zu Namen
+
 Gerätename in der Konfiguration: `glucoscreen`. Die Entitäts- und Aktionsnamen unten
 folgen daraus (z. B. `light.glucoscreen_backlight`, `esphome.glucoscreen_glukose_setzen`).
 Falls HA bei dir andere Entitäts-IDs vergeben hat, die eigenen verwenden.
