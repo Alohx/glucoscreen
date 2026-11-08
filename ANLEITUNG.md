@@ -200,6 +200,33 @@ In `glucoscreen.yaml`:
 Die Oberfläche nutzt an mehreren Stellen direkt die LVGL-C-API (Rotation, Diagramm,
 Animation, Farbwechsel). Bei Fehlermeldungen die Zeilen mit `error:` schicken.
 
+## Gestaltung und verwendete Fremdinhalte
+
+Die Gestaltung ist **inspiriert** von der üblichen Darstellung in CGM-Smartphone-Apps,
+insbesondere der Dexcom-App: Wert im Kreis mit Spitze in Trendrichtung, Punktediagramm mit
+hinterlegtem Zielbereich, gelb/rot für hoch/niedrig. Das sind verbreitete Konventionen für
+Glukoseanzeigen.
+
+**Es werden keine Inhalte von Dexcom oder deren Apps verwendet** – keine Logos, Bilder,
+Icons, Screenshots, Schriften, Texte, Quellcode oder Datendateien. Alles Sichtbare erzeugt
+die Firmware selbst:
+
+| Element | Herkunft |
+|---|---|
+| Kreis, Trendspitze, Diagramm, Schaltflächen | zur Laufzeit mit LVGL gezeichnet (eigener Code) |
+| Trendpfeil | „Play“-Dreieck aus dem in LVGL enthaltenen Font-Awesome-Symbolsatz |
+| Schriften | Roboto (über Google Fonts) und Montserrat (in LVGL enthalten), beide unter der SIL Open Font License |
+| Farben | eigene Wahl gängiger Farben, keine aus einer App übernommenen Werte |
+| Texte und Übersetzungen | für dieses Projekt geschrieben |
+
+**Datenquelle:** Das Gerät kommuniziert ausschließlich mit deinem Home Assistant und
+verbindet sich nie mit Servern von Dexcom oder anderen Herstellern. Die Glukosewerte kommen
+aus der Integration, die du in Home Assistant nutzt.
+
+Dexcom und Dexcom G7 sind Marken der Dexcom, Inc. Sie werden hier nur zur Beschreibung der
+Kompatibilität und der Design-Inspiration genannt. Das Projekt steht in keiner Verbindung zu
+Dexcom oder anderen CGM-Herstellern und wird von ihnen weder unterstützt noch gesponsert.
+
 ## Hinweis
 
 Hobbyprojekt und **kein Medizinprodukt**. Therapieentscheidungen nicht anhand dieser Anzeige

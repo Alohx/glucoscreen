@@ -2,7 +2,8 @@
 #  Glucoscreen – Glukose-Anzeige (CGM) für Home Assistant
 #  Hardware: Guition ESP32-S3-4848S040 (480x480, ST7701S, GT911)
 #
-#  Seite 1 (Start):    Glukosewert im Kreis + Trendpfeil (Stil der Dexcom App)
+#  Seite 1 (Start):    Glukosewert im Kreis + Trendpfeil
+#                      (Gestaltung inspiriert von gängigen CGM-Apps, eigene Umsetzung)
 #  Seite 2 (Swipe):    Verlaufsdiagramm 3 / 6 / 12 / 24 h
 #                      (Punkt lange drücken = Uhrzeit anzeigen)
 #  Seite 3 (Swipe):    Grenzwerte
@@ -708,7 +709,7 @@ script:
           else snprintf(buf, sizeof(buf), "%d", (int) lroundf(g));
           lv_label_set_text(id(lbl_value), buf);
 
-          // Farben wie in der Dexcom App: Ring + Spitze in Grundfarbe,
+          // Farbschema angelehnt an gängige CGM-Apps: Ring + Spitze in Grundfarbe,
           // nur die Innenfläche wird gelb (hoch) bzw. rot (niedrig)
           uint32_t face = P.face, txt = P.text, unit = P.text2;
           if (stale) {

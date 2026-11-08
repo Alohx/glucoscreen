@@ -1,7 +1,8 @@
 # Glucoscreen – CGM glucose display for Home Assistant
 
 An ESPHome/LVGL firmware for the **Guition ESP32-S3-4848S040** (480×480 touch display) that
-shows continuous glucose monitor (CGM) values from Home Assistant, styled like the Dexcom app.
+shows continuous glucose monitor (CGM) values from Home Assistant. The look is inspired by
+common CGM smartphone apps (see [Design and third-party content](#design-and-third-party-content)).
 
 It is **not tied to a specific sensor**: any CGM works whose glucose value, trend and reading
 time are available in Home Assistant (e.g. via the Dexcom, Nightscout or LibreLink
@@ -231,9 +232,33 @@ In `glucoscreen.yaml`:
   animation, theming). Written for the LVGL 8 version bundled with current ESPHome; the
   LVGL 9 differences that are known are handled with `#if`.
 
+## Design and third-party content
+
+The layout is **inspired by** the general design language of common CGM smartphone apps,
+in particular the Dexcom app: the value in a circle with a pointer showing the trend
+direction, a dotted history chart with a shaded target range, and yellow/red for high/low
+values. These are widespread conventions for glucose displays.
+
+**No material from Dexcom or its apps is used** – no logos, images, icons, screenshots,
+fonts, texts, source code or data files. Everything visible is drawn by this firmware itself:
+
+| Element | Origin |
+|---|---|
+| Circle, trend pointer, chart, buttons | Drawn at runtime with LVGL primitives (own code) |
+| Trend arrow | “Play” triangle of the Font Awesome symbol set bundled with LVGL |
+| Fonts | [Roboto](https://fonts.google.com/specimen/Roboto) (via Google Fonts) and Montserrat (bundled with LVGL), both under the SIL Open Font License |
+| Colors | Own choice of common colors, no values taken from any app |
+| Texts and translations | Written for this project |
+
+**Data source:** the device only talks to your Home Assistant. It never connects to
+Dexcom or any other manufacturer's servers; the glucose values come from whatever
+integration you use in Home Assistant.
+
 ## Disclaimer
 
 This is a hobby project and **not a medical device**. Do not base treatment decisions on this
 display – always use the official receiver or app of your CGM and its alarms.
-Dexcom is a trademark of Dexcom, Inc.; this project is not affiliated with or endorsed by
-Dexcom or any other CGM manufacturer.
+
+Dexcom and Dexcom G7 are trademarks of Dexcom, Inc. They are used here only to describe
+compatibility and design inspiration. This project is not affiliated with, endorsed by or
+sponsored by Dexcom or any other CGM manufacturer.

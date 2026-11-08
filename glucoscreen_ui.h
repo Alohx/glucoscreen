@@ -38,7 +38,8 @@ static const Palette DARK = {
 
 inline const Palette &pal(bool dark) { return dark ? DARK : LIGHT; }
 
-// Warnfarben (in beiden Modi gleich, wie in der Dexcom App)
+// Warnfarben (in beiden Modi gleich; eigene Farbwahl, angelehnt an das
+// übliche Schema von CGM-Apps: gelb = hoch, rot = niedrig)
 static const uint32_t COL_HIGH = 0xFFC72C;
 static const uint32_t COL_LOW = 0xF2203E;
 static const uint32_t COL_URGENT_LOW = 0xC8102E;
