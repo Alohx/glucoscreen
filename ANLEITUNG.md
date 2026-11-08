@@ -19,8 +19,10 @@ Repository; du behältst nur eine kleine Gerätedatei mit Name und Zugangsdaten.
 | Datei | Zweck |
 |---|---|
 | `example.yaml` | **die einzige Datei, die du kopierst** – deine Gerätekonfiguration |
-| `glucoscreen.yaml` | ESPHome-Paket mit der eigentlichen Firmware, wird von GitHub geladen |
+| `glucoscreen.yaml` | ESPHome-Paket für die Gerätehardware, wird von GitHub geladen |
+| `glucoscreen_core.yaml` | Oberfläche und Logik, gemeinsam für Gerät und Simulator |
 | `components/glucoscreen_ui/` | External Component mit Übersetzungen und Farben |
+| `simulator/simulator.yaml` | Oberfläche am PC – für Screenshots und Tests ohne Gerät |
 
 1. [`example.yaml`](example.yaml) in den ESPHome-Ordner kopieren (Name beliebig, z. B.
    `glucoscreen.yaml`), bei Bedarf `name` / `friendly_name` anpassen.
@@ -223,7 +225,48 @@ In `glucoscreen.yaml`:
 4. Fehlende Sonderzeichen der Übersetzungen bei `font_text` und `font_title` unter
    `glyphs` ergänzen (gängige west­europäische Akzente sind schon enthalten).
 
-## 7. Falls etwas nicht kompiliert
+## 7. Simulator (Screenshots und Tests ohne Gerät)
+
+`simulator/simulator.yaml` zeigt die komplette Oberfläche am PC in einem 480×480-Fenster und
+nutzt dabei die **lokalen** Dateien des Repositorys – Änderungen lassen sich also vor dem
+Committen oder Flashen ausprobieren. Die Maus ersetzt den Touchscreen (Klick = Tippen,
+Ziehen = Wischen, Halten = langes Drücken). Statt Home Assistant liefern Demo-Werte einen
+aktuellen Wert und einen 24-h-Verlauf.
+
+Grundlage ist die ESPHome-Plattform `host` mit SDL-Fenster; sie läuft unter **Linux und
+macOS**, unter **Windows 11** über WSL (zeigt Linux-Fenster direkt an):
+
+1. WSL mit Ubuntu installieren (PowerShell als Administrator), danach Windows neu starten:
+   ```powershell
+   wsl --install -d Ubuntu
+   ```
+   Einmal „Ubuntu“ aus dem Startmenü öffnen und einen Linux-Benutzer anlegen.
+2. In Ubuntu Build-Werkzeuge, SDL2 und ESPHome installieren:
+   ```bash
+   sudo apt update && sudo apt install -y python3-venv python3-dev build-essential git libsdl2-dev
+   python3 -m venv ~/esphome-venv
+   ~/esphome-venv/bin/pip install esphome
+   ```
+3. Repository in Ubuntu klonen (privates Repository: `gh repo clone` oder Token-URL):
+   ```bash
+   git clone https://github.com/Alohx/glucoscreen.git ~/glucoscreen
+   ```
+4. Simulator starten (der erste Build dauert einige Minuten):
+   ```bash
+   cd ~/glucoscreen && ~/esphome-venv/bin/esphome run simulator/simulator.yaml
+   ```
+   Beenden mit Strg+C im Terminal.
+
+**Demo-Szenarien:** `demo_glucose` / `demo_trend` in `simulator.yaml` ändern oder beim Start
+angeben, z. B. niedriger, fallender Wert:
+```bash
+~/esphome-venv/bin/esphome -s demo_glucose 62 -s demo_trend falling run simulator/simulator.yaml
+```
+
+**Screenshots:** unter Windows **Win+Umschalt+S** → *Fenster* → Simulator-Fenster anklicken.
+Als PNG in `images/` speichern und in der README einbinden, z. B. `![Start](images/home.png)`.
+
+## 8. Falls etwas nicht kompiliert
 
 Die Oberfläche nutzt an mehreren Stellen direkt die LVGL-C-API (Rotation, Diagramm,
 Animation, Farbwechsel). Bei Fehlermeldungen die Zeilen mit `error:` schicken.

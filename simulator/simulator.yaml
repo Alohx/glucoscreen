@@ -1,0 +1,124 @@
+# =====================================================================
+#  Glucoscreen – Simulator
+#
+#  Runs the Glucoscreen UI on a PC in a 480x480 window (ESPHome "host"
+#  platform with SDL). The mouse acts as touchscreen: click = tap,
+#  drag = swipe, hold = long press.
+#
+#  Uses the LOCAL files of this repository (glucoscreen_core.yaml and
+#  components/glucoscreen_ui), so changes can be tested before they are
+#  committed or flashed. No Home Assistant needed: demo values fill the
+#  current reading and a 24 h history.
+#
+#  Start (Linux / macOS / Windows with WSL), from the repository folder:
+#      esphome run simulator/simulator.yaml
+#
+#  Change the demo scenario below (or on the command line, e.g.
+#  esphome -s demo_glucose 62 -s demo_trend falling run simulator/simulator.yaml)
+# =====================================================================
+
+substitutions:
+  name: glucoscreen-sim
+  friendly_name: Glucoscreen Simulator
+  # Demo scenario: value in mg/dL and trend (see README for trend values)
+  demo_glucose: "128"
+  demo_trend: steady
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  on_boot:
+    - priority: -200
+      then:
+        - wait_until:
+            condition:
+              time.has_time: ha_time
+        - script.execute: demo_fill
+
+host:
+
+# Local component instead of GitHub
+external_components:
+  - source:
+      type: local
+      path: ../components
+    components: [glucoscreen_ui]
+
+packages:
+  core: !include ../glucoscreen_core.yaml
+
+# Window instead of the ST7701S display
+display:
+  - platform: sdl
+    id: main_display
+    auto_clear_enabled: false
+    update_interval: never
+    dimensions:
+      width: 480
+      height: 480
+
+# Mouse instead of the GT911 touch controller
+touchscreen:
+  - platform: sdl
+    id: main_touch
+    display: main_display
+
+# Backlight: only logged (there is no real backlight)
+output:
+  - platform: template
+    id: backlight_pwm
+    type: float
+    write_action:
+      - logger.log:
+          format: "Backlight: %.0f %%"
+          args: ["state * 100"]
+
+# PC clock instead of Home Assistant time
+time:
+  - platform: host
+    id: ha_time
+
+script:
+  # Fill the current reading and a plausible 24 h history
+  - id: demo_fill
+    then:
+      - lambda: |-
+          auto now = id(ha_time).now();
+          if (!now.is_valid()) return;
+          uint32_t ts = now.timestamp;
+          uint32_t slot = ts / 300;
+          float cur = ${demo_glucose};
+          auto &vals = id(hist_vals);
+          vals.fill(0);
+          for (int i = 0; i < 288; i++) {
+            float x = (float) i;
+            // smooth curve that ends exactly at the current value, plus a "meal" peak
+            float v = cur + 40.0f * sinf(x / 18.0f)
+                    + 18.0f * (sinf(x / 5.3f + 1.0f) - sinf(1.0f))
+                    + 70.0f * expf(-((x - 70.0f) * (x - 70.0f)) / 120.0f)
+                    + 55.0f * expf(-((x - 190.0f) * (x - 190.0f)) / 200.0f);
+            if (v < 45) v = 45;
+            if (v > 380) v = 380;
+            vals[(slot - i) % 288] = (uint16_t) lroundf(v);
+          }
+          id(hist_last_slot) = slot;
+          id(last_reading_ts) = ts;
+          id(trend).publish_state("${demo_trend}");
+          id(glucose).publish_state(cur);
+      - script.execute: refresh_all
+
+  # Keep the demo reading "fresh" (otherwise it turns grey after 15 min)
+  - id: demo_reading
+    then:
+      - lambda: |-
+          auto now = id(ha_time).now();
+          if (!now.is_valid()) return;
+          id(last_reading_ts) = now.timestamp;
+          id(glucose).publish_state(${demo_glucose});
+      - script.execute: record_reading
+      - script.execute: refresh_all
+
+interval:
+  - interval: 5min
+    then:
+      - script.execute: demo_reading

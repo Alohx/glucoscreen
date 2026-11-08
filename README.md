@@ -23,8 +23,10 @@ Features:
 | File | Purpose |
 |---|---|
 | `example.yaml` | **The only file you copy** – your own device configuration |
-| `glucoscreen.yaml` | ESPHome package with the actual firmware, loaded from GitHub |
+| `glucoscreen.yaml` | ESPHome package for the device hardware, loaded from GitHub |
+| `glucoscreen_core.yaml` | UI and logic, shared by device and simulator |
 | `components/glucoscreen_ui/` | External component with translations and color palettes |
+| `simulator/simulator.yaml` | Runs the UI on a PC – for screenshots and testing without a device |
 | `ANLEITUNG.md` | This guide in German |
 
 The device name in the configuration is `glucoscreen`. The entity and action names below are
@@ -246,7 +248,50 @@ In `glucoscreen.yaml`:
 4. Add missing special characters of your translations to `glyphs` of `font_text` and
    `font_title` (common Western European accents are already included).
 
-## 7. Troubleshooting
+## 7. Simulator (screenshots and testing without a device)
+
+`simulator/simulator.yaml` runs the complete UI on a PC in a 480×480 window, using the
+**local** files of the repository – changes can be tried out before committing or flashing.
+The mouse is the touchscreen (click = tap, drag = swipe, hold = long press). Instead of
+Home Assistant, demo values provide a current reading and a 24 h history.
+
+It uses ESPHome's `host` platform with an SDL window, which runs on **Linux and macOS**.
+On **Windows 11** use WSL (it displays Linux windows directly):
+
+1. Install WSL with Ubuntu (PowerShell as administrator), then restart Windows:
+   ```powershell
+   wsl --install -d Ubuntu
+   ```
+   Open “Ubuntu” from the Start menu once and create a Linux user.
+2. In Ubuntu, install the build tools, SDL2 and ESPHome:
+   ```bash
+   sudo apt update && sudo apt install -y python3-venv python3-dev build-essential git libsdl2-dev
+   python3 -m venv ~/esphome-venv
+   ~/esphome-venv/bin/pip install esphome
+   ```
+3. Clone the repository in Ubuntu (for a private repository use `gh repo clone` or a token URL):
+   ```bash
+   git clone https://github.com/Alohx/glucoscreen.git ~/glucoscreen
+   ```
+4. Start the simulator (the first build takes a few minutes):
+   ```bash
+   cd ~/glucoscreen && ~/esphome-venv/bin/esphome run simulator/simulator.yaml
+   ```
+   Stop it with Ctrl+C in the terminal.
+
+On Linux/macOS skip step 1 (macOS: `brew install sdl2` instead of `apt`).
+
+**Demo scenarios:** change `demo_glucose` / `demo_trend` in `simulator.yaml` or on the
+command line, e.g. a low falling value:
+```bash
+~/esphome-venv/bin/esphome -s demo_glucose 62 -s demo_trend falling run simulator/simulator.yaml
+```
+
+**Screenshots:** on Windows press **Win+Shift+S**, choose *Window* and click the simulator
+window; on macOS **Cmd+Shift+4**, then Space. Save them as PNG in `images/` and reference
+them in this README, e.g. `![Home](images/home.png)`.
+
+## 8. Troubleshooting
 
 - **Audible whine when dimmed:** the backlight PWM runs at 25 kHz. If you still hear it, try
   30000Hz or 40000Hz under `output:` → `frequency:`. A whine at 100 % brightness usually comes
