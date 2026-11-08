@@ -13,13 +13,34 @@ Falls HA bei dir andere Entitäts-IDs vergeben hat, die eigenen verwenden.
 
 ## 1. Flashen
 
-1. **Beide Dateien** in den ESPHome-Ordner legen: `glucoscreen.yaml` und `glucoscreen_ui.h`
-   (Übersetzungen + Farben, wird von der YAML eingebunden).
+Die Firmware wird **nicht kopiert**. ESPHome lädt sie als *Remote-Paket* direkt aus diesem
+Repository; du behältst nur eine kleine Gerätedatei mit Name und Zugangsdaten.
+
+| Datei | Zweck |
+|---|---|
+| `example.yaml` | **die einzige Datei, die du kopierst** – deine Gerätekonfiguration |
+| `glucoscreen.yaml` | ESPHome-Paket mit der eigentlichen Firmware, wird von GitHub geladen |
+| `components/glucoscreen_ui/` | External Component mit Übersetzungen und Farben |
+
+1. [`example.yaml`](example.yaml) in den ESPHome-Ordner kopieren (Name beliebig, z. B.
+   `glucoscreen.yaml`), bei Bedarf `name` / `friendly_name` anpassen.
 2. In `secrets.yaml` müssen vorhanden sein: `wifi_ssid`, `wifi_password`, `ap_password`,
    `ota_password`, `glucoscreen_api_key` (bei einem Update den API-Schlüssel der
    bisherigen Installation verwenden, sonst muss das Gerät in HA neu gekoppelt werden).
-3. Installieren (OTA reicht).
+3. Installieren (OTA reicht). ESPHome lädt Paket und Komponente selbst herunter.
 4. Die Automationen aus Abschnitt 2 (Pflicht) und 3 (Lücken nachladen) anlegen.
+
+**Updates:** ESPHome prüft beim Kompilieren höchstens einmal täglich auf eine neue Version
+(`refresh: 1d`); erneut installieren bringt das Gerät auf den neuen Stand. Für eine feste
+Version in der Gerätedatei bei `ref:` statt `main` ein Release-Tag eintragen (z. B. `v1.0.0`).
+
+**Anpassen:** Alles aus dem Paket lässt sich in der eigenen Gerätedatei mit `!extend` /
+`!remove` ändern (Beispiele am Ende von `example.yaml`), ohne das Paket anzufassen.
+
+**Privates Repository / Fork:** ESPHome braucht Lesezugriff. Bei einem privaten Repository
+in der URL von `packages` und `external_components` (in `glucoscreen.yaml`) ein
+Zugriffstoken angeben, z. B. per `!secret`. Bei einem Fork `Alohx/glucoscreen` in
+`example.yaml` **und** in `external_components` von `glucoscreen.yaml` ersetzen.
 
 ## 2. Glukosewerte senden (Automation, Pflicht)
 
@@ -183,7 +204,11 @@ fest auf Deutsch (HA kann sie nicht mit der Display-Sprache umschalten).
 
 ## 6. Weitere Sprache hinzufügen
 
-In `glucoscreen_ui.h`:
+Da die Firmware von GitHub geladen wird, gehören solche Änderungen in einen Fork des
+Repositorys (die eigene Gerätedatei dann darauf zeigen lassen) – oder besser als Pull
+Request hierher, damit alle die neue Sprache bekommen.
+
+In `components/glucoscreen_ui/glucoscreen_ui.h`:
 1. `LANG_COUNT` erhöhen, Namen in `LANG_NAMES` anhängen.
 2. In `TEXTS` jeder Zeile eine Spalte mit der Übersetzung anhängen.
 

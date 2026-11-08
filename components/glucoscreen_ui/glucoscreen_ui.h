@@ -1,7 +1,7 @@
 // =====================================================================
 //  Glucoscreen – Übersetzungen und Farbpaletten
-//  Wird von glucoscreen.yaml über "esphome: includes:" eingebunden.
-//  Diese Datei muss im selben Ordner wie glucoscreen.yaml liegen.
+//  Teil der External Component "glucoscreen_ui"; ESPHome bindet die Datei
+//  automatisch ein, sobald glucoscreen.yaml geladen wird.
 // =====================================================================
 #pragma once
 #include <cstdint>

@@ -22,8 +22,9 @@ Features:
 
 | File | Purpose |
 |---|---|
-| `glucoscreen.yaml` | ESPHome configuration (device name `glucoscreen`) |
-| `glucoscreen_ui.h` | Translations and color palettes, included by the YAML |
+| `example.yaml` | **The only file you copy** – your own device configuration |
+| `glucoscreen.yaml` | ESPHome package with the actual firmware, loaded from GitHub |
+| `components/glucoscreen_ui/` | External component with translations and color palettes |
 | `ANLEITUNG.md` | This guide in German |
 
 The device name in the configuration is `glucoscreen`. The entity and action names below are
@@ -35,12 +36,29 @@ If Home Assistant assigned different entity IDs on your system, use your own.
 
 ## 1. Flashing
 
-1. Put **both files** into your ESPHome folder: `glucoscreen.yaml` and `glucoscreen_ui.h`.
+You do **not** copy the firmware. ESPHome loads it directly from this repository as a
+[remote package](https://esphome.io/components/packages/), and you only keep a small device
+file with your name and secrets:
+
+1. Copy [`example.yaml`](example.yaml) into your ESPHome folder (any name, e.g.
+   `glucoscreen.yaml`) and adjust `name` / `friendly_name` if you like.
 2. Your `secrets.yaml` must contain: `wifi_ssid`, `wifi_password`, `ap_password`,
    `ota_password`, `glucoscreen_api_key` (when updating an existing installation keep its
    API key, otherwise the device has to be re-adopted in Home Assistant).
-3. Install (OTA is fine).
+3. Install (OTA is fine). ESPHome downloads the package and the `glucoscreen_ui` component.
 4. Create the automations from section 2 (required) and 3 (refilling gaps).
+
+**Updates:** ESPHome checks for a new version at most once a day (`refresh: 1d`) when you
+compile; installing again brings the device up to date. To stay on a fixed version, set
+`ref:` in your device file to a release tag (e.g. `v1.0.0`) instead of `main`.
+
+**Customizing:** anything from the package can be changed in your device file with
+`!extend` / `!remove` (examples at the end of `example.yaml`), without touching the package.
+
+**Private fork / repository:** ESPHome needs access to the repository. For a private one,
+use an access token in the URL of `packages` and of `external_components` (in
+`glucoscreen.yaml`), e.g. via `!secret`. When you fork the project, replace `Alohx/glucoscreen`
+with your repository in `example.yaml` **and** in `external_components` of `glucoscreen.yaml`.
 
 ## 2. Sending glucose values (automation, required)
 
@@ -210,7 +228,11 @@ switch them with the display language).
 
 ## 6. Adding a language
 
-In `glucoscreen_ui.h`:
+Because the firmware is loaded from GitHub, changes like this go into a fork of the
+repository (point your device file to it) – or, better, into a pull request here so that
+everyone gets the new language.
+
+In `components/glucoscreen_ui/glucoscreen_ui.h`:
 1. Increase `LANG_COUNT` and append the name to `LANG_NAMES`.
 2. Append a column with the translation to every row of `TEXTS`.
 

@@ -1,0 +1,53 @@
+# =====================================================================
+#  Glucoscreen – your own device configuration
+#
+#  Copy ONLY this file into your ESPHome folder (rename it as you like,
+#  e.g. glucoscreen.yaml). Everything else is loaded from GitHub and
+#  updated automatically (at most once a day, see "refresh").
+#
+#  Your secrets.yaml needs: glucoscreen_api_key, ota_password,
+#  wifi_ssid, wifi_password, ap_password
+# =====================================================================
+
+substitutions:
+  name: glucoscreen            # device / entity name in Home Assistant
+  friendly_name: Glucoscreen
+
+packages:
+  glucoscreen:
+    url: https://github.com/Alohx/glucoscreen
+    ref: main                  # or a release tag such as v1.0.0 for a fixed version
+    files: [glucoscreen.yaml]
+    refresh: 1d
+
+api:
+  encryption:
+    key: !secret glucoscreen_api_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "${friendly_name} Fallback"
+    password: !secret ap_password
+
+captive_portal:
+
+# ---------------------------------------------------------------------
+#  Optional: adjust or override anything from the package here, e.g.
+#
+#  output:
+#    - id: !extend backlight_pwm
+#      frequency: 40000Hz
+#
+#  The three relays of the 4848S040 relay variant can be removed with:
+#
+#  switch:
+#    - id: !remove relay_1
+#    - id: !remove relay_2
+#    - id: !remove relay_3
+# ---------------------------------------------------------------------
