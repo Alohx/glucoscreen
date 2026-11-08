@@ -32,7 +32,8 @@ esphome:
       then:
         - wait_until:
             condition:
-              time.has_time: ha_time
+              time.has_time:
+                id: ha_time
         - script.execute: demo_fill
 
 host:
