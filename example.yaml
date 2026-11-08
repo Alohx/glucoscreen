@@ -12,13 +12,31 @@
 substitutions:
   name: glucoscreen            # device / entity name in Home Assistant
   friendly_name: Glucoscreen
+  # Private repository or fork: uncomment, see "Private repository" below
+  # glucoscreen_repo_url: !secret glucoscreen_repo_url
+  # glucoscreen_ref: main
+  # glucoscreen_refresh: 0s
 
 packages:
   glucoscreen:
     url: https://github.com/Alohx/glucoscreen
+    # url: !secret glucoscreen_repo_url   # private repository: use this line instead
     ref: main                  # or a release tag such as v1.0.0 for a fixed version
     files: [glucoscreen.yaml]
-    refresh: 1d
+    refresh: 1d                # 0s = fetch the latest version on every compile
+
+# ---------------------------------------------------------------------
+#  Private repository (e.g. testing before it is public)
+#
+#  1. Create a read-only token on GitHub: Settings -> Developer settings
+#     -> Personal access tokens -> Fine-grained tokens. Repository access:
+#     only this repository; Permissions: Contents = Read-only.
+#  2. In secrets.yaml:
+#       glucoscreen_repo_url: https://USER:TOKEN@github.com/USER/glucoscreen
+#  3. Uncomment the three substitutions above and the "url: !secret" line
+#     (and remove the public "url:" line).
+#  Delete the token on GitHub once the repository is public.
+# ---------------------------------------------------------------------
 
 api:
   encryption:

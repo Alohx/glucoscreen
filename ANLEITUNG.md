@@ -37,10 +37,13 @@ Version in der Gerätedatei bei `ref:` statt `main` ein Release-Tag eintragen (z
 **Anpassen:** Alles aus dem Paket lässt sich in der eigenen Gerätedatei mit `!extend` /
 `!remove` ändern (Beispiele am Ende von `example.yaml`), ohne das Paket anzufassen.
 
-**Privates Repository / Fork:** ESPHome braucht Lesezugriff. Bei einem privaten Repository
-in der URL von `packages` und `external_components` (in `glucoscreen.yaml`) ein
-Zugriffstoken angeben, z. B. per `!secret`. Bei einem Fork `Alohx/glucoscreen` in
-`example.yaml` **und** in `external_components` von `glucoscreen.yaml` ersetzen.
+**Privates Repository / Fork:** ESPHome braucht Lesezugriff. Auf GitHub ein
+Fine-grained-Token anlegen (nur dieses Repository, *Contents: Read-only*), in `secrets.yaml`
+`glucoscreen_repo_url: https://NUTZER:TOKEN@github.com/NUTZER/glucoscreen` eintragen und es
+in der Gerätedatei für Paket (`url: !secret glucoscreen_repo_url`) **und** Komponente
+(`substitutions: glucoscreen_repo_url: !secret glucoscreen_repo_url`) verwenden. Die
+auskommentierten Zeilen in `example.yaml` zeigen die Stellen. Bei einem öffentlichen Fork
+beide auf die eigene Repository-URL ohne Token setzen.
 
 ## 2. Glukosewerte senden (Automation, Pflicht)
 

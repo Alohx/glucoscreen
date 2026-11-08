@@ -55,10 +55,13 @@ compile; installing again brings the device up to date. To stay on a fixed versi
 **Customizing:** anything from the package can be changed in your device file with
 `!extend` / `!remove` (examples at the end of `example.yaml`), without touching the package.
 
-**Private fork / repository:** ESPHome needs access to the repository. For a private one,
-use an access token in the URL of `packages` and of `external_components` (in
-`glucoscreen.yaml`), e.g. via `!secret`. When you fork the project, replace `Alohx/glucoscreen`
-with your repository in `example.yaml` **and** in `external_components` of `glucoscreen.yaml`.
+**Private repository / fork:** ESPHome needs read access. Create a fine-grained GitHub
+token (only this repository, *Contents: Read-only*), put
+`glucoscreen_repo_url: https://USER:TOKEN@github.com/USER/glucoscreen` into `secrets.yaml`
+and use it in your device file for both the package (`url: !secret glucoscreen_repo_url`)
+and the component (`substitutions: glucoscreen_repo_url: !secret glucoscreen_repo_url`).
+The commented lines in `example.yaml` show exactly where. For a public fork, set both to
+your repository URL without a token.
 
 ## 2. Sending glucose values (automation, required)
 

@@ -34,13 +34,20 @@
 substitutions:
   name: glucoscreen
   friendly_name: Glucoscreen
+  # Quelle der Komponente glucoscreen_ui. Für einen Fork oder ein privates
+  # Repository (URL mit Zugriffstoken, per !secret) in der Gerätedatei setzen.
+  glucoscreen_repo_url: https://github.com/Alohx/glucoscreen
+  glucoscreen_ref: main
+  glucoscreen_refresh: 1d
 
-# Übersetzungen + Farbpaletten (components/glucoscreen_ui/glucoscreen_ui.h).
-# Bei einem Fork hier den eigenen GitHub-Pfad eintragen.
+# Übersetzungen + Farbpaletten (components/glucoscreen_ui/glucoscreen_ui.h)
 external_components:
-  - source: github://Alohx/glucoscreen@main
+  - source:
+      type: git
+      url: ${glucoscreen_repo_url}
+      ref: ${glucoscreen_ref}
     components: [glucoscreen_ui]
-    refresh: 1d
+    refresh: ${glucoscreen_refresh}
 
 glucoscreen_ui:
 
