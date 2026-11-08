@@ -8,6 +8,8 @@ It is **not tied to a specific sensor**: any CGM works whose glucose value, tren
 time are available in Home Assistant (e.g. via the Dexcom, Nightscout or LibreLink
 integrations). It has been tested with a **Dexcom G7** via the Dexcom integration.
 
+> Created with AI assistance – see [Created with AI assistance](#created-with-ai-assistance).
+
 <p align="center">
   <img src="images/home-light-de.png" width="240" alt="Home screen with glucose value and trend">
   <img src="images/chart-light.png" width="240" alt="3 hour history chart">
@@ -358,6 +360,14 @@ fonts, texts, source code or data files. Everything visible is drawn by this fir
 **Data source:** the device only talks to your Home Assistant. It never connects to
 Dexcom or any other manufacturer's servers; the glucose values come from whatever
 integration you use in Home Assistant.
+
+## Created with AI assistance
+
+This project was developed with the help of AI: the configuration, code, translations and
+documentation were written together with **Claude** (Anthropic) in Claude Code, based on
+the author's requirements. The author tested the firmware on real hardware and in the
+simulator and is responsible for the project. As with any
+hobby project, please review the code before you use it – and see the disclaimer below.
 
 ## License
 

@@ -325,6 +325,14 @@ Dexcom und Dexcom G7 sind Marken der Dexcom, Inc. Sie werden hier nur zur Beschr
 Kompatibilität und der Design-Inspiration genannt. Das Projekt steht in keiner Verbindung zu
 Dexcom oder anderen CGM-Herstellern und wird von ihnen weder unterstützt noch gesponsert.
 
+## Mit KI-Unterstützung erstellt
+
+Dieses Projekt wurde mit Hilfe von KI entwickelt: Konfiguration, Code, Übersetzungen und
+Dokumentation sind gemeinsam mit **Claude** (Anthropic) in Claude Code nach den Vorgaben des
+Autors entstanden. Der Autor hat die Firmware auf echter Hardware und im Simulator getestet
+und ist für das Projekt verantwortlich. Wie bei jedem
+Hobbyprojekt gilt: Code vor der Nutzung prüfen – und den Hinweis unten beachten.
+
 ## Lizenz
 
 Copyright (C) 2026 Alohx
