@@ -276,6 +276,27 @@ fonts, texts, source code or data files. Everything visible is drawn by this fir
 Dexcom or any other manufacturer's servers; the glucose values come from whatever
 integration you use in Home Assistant.
 
+## License
+
+Copyright (C) 2026 Alohx
+
+Glucoscreen is free software: you can redistribute it and/or modify it under the terms of
+the **GNU General Public License v3.0** as published by the Free Software Foundation. It is
+distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See [LICENSE](LICENSE)
+for the full text.
+
+In short: you may use, modify, share and also sell it, but if you distribute a modified
+version (including firmware on devices you sell), you must publish its source code under
+the same license.
+
+Contributions are welcome – open an issue or a pull request. By submitting a pull request
+you agree that your contribution is licensed under GPL-3.0 as well.
+
+Third-party components keep their own licenses: ESPHome (MIT / GPL-3.0), LVGL (MIT),
+Roboto and Montserrat (SIL Open Font License 1.1), Font Awesome symbols bundled with LVGL
+(SIL OFL 1.1).
+
 ## Disclaimer
 
 This is a hobby project and **not a medical device**. Do not base treatment decisions on this

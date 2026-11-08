@@ -252,6 +252,22 @@ Dexcom und Dexcom G7 sind Marken der Dexcom, Inc. Sie werden hier nur zur Beschr
 Kompatibilität und der Design-Inspiration genannt. Das Projekt steht in keiner Verbindung zu
 Dexcom oder anderen CGM-Herstellern und wird von ihnen weder unterstützt noch gesponsert.
 
+## Lizenz
+
+Copyright (C) 2026 Alohx
+
+Glucoscreen steht unter der **GNU General Public License v3.0** (GPL-3.0), vollständiger
+Text in [LICENSE](LICENSE). Kurz: Nutzen, ändern, weitergeben und auch verkaufen ist
+erlaubt. Wer eine veränderte Version weitergibt – auch als Firmware auf verkauften Geräten –,
+muss deren Quellcode unter derselben Lizenz veröffentlichen. Es gibt keine Gewährleistung.
+
+Beiträge sind willkommen (Issue oder Pull Request). Mit einem Pull Request stimmst du zu,
+dass dein Beitrag ebenfalls unter GPL-3.0 steht.
+
+Fremdkomponenten behalten ihre eigenen Lizenzen: ESPHome (MIT / GPL-3.0), LVGL (MIT),
+Roboto und Montserrat (SIL Open Font License 1.1), in LVGL enthaltene Font-Awesome-Symbole
+(SIL OFL 1.1).
+
 ## Hinweis
 
 Hobbyprojekt und **kein Medizinprodukt**. Therapieentscheidungen nicht anhand dieser Anzeige
