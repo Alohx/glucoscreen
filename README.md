@@ -275,7 +275,7 @@ On **Windows 11** use WSL (it displays Linux windows directly):
    ```
 4. Start the simulator (the first build takes a few minutes):
    ```bash
-   cd ~/glucoscreen && ~/esphome-venv/bin/esphome run simulator/simulator.yaml
+   cd ~/glucoscreen && ESPHOME_PCH_ENABLE=0 ~/esphome-venv/bin/esphome run simulator/simulator.yaml
    ```
    Stop it with Ctrl+C in the terminal.
 
@@ -284,7 +284,7 @@ On Linux/macOS skip step 1 (macOS: `brew install sdl2` instead of `apt`).
 **Demo scenarios:** change `demo_glucose` / `demo_trend` in `simulator.yaml` or on the
 command line, e.g. a low falling value:
 ```bash
-~/esphome-venv/bin/esphome -s demo_glucose 62 -s demo_trend falling run simulator/simulator.yaml
+ESPHOME_PCH_ENABLE=0 ~/esphome-venv/bin/esphome -s demo_glucose 62 -s demo_trend falling run simulator/simulator.yaml
 ```
 
 **Screenshots:** on Windows press **Win+Shift+S**, choose *Window* and click the simulator

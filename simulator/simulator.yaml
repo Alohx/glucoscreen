@@ -11,10 +11,13 @@
 #  current reading and a 24 h history.
 #
 #  Start (Linux / macOS / Windows with WSL), from the repository folder:
-#      esphome run simulator/simulator.yaml
+#      ESPHOME_PCH_ENABLE=0 esphome run simulator/simulator.yaml
+#  (ESPHOME_PCH_ENABLE=0: the precompiled header of ESPHome breaks the
+#  host build together with the time component – "expected
+#  primary-expression" in logger_host.cpp)
 #
 #  Change the demo scenario below (or on the command line, e.g.
-#  esphome -s demo_glucose 62 -s demo_trend falling run simulator/simulator.yaml)
+#  ESPHOME_PCH_ENABLE=0 esphome -s demo_glucose 62 -s demo_trend falling run simulator/simulator.yaml)
 # =====================================================================
 
 substitutions:
